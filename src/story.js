@@ -19,7 +19,7 @@ const badWordIndex = storyWords.findIndex(word => {
   return word === badWord;
 })
 console.log(badWordIndex);
-storyWords[badWordIndex] = "really";
+storyWords[badWordIndex] = "realmente";
 const lengthCheck = storyWords.every(word => {
   return word.length < 20;
 })
