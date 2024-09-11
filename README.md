@@ -100,3 +100,141 @@ console.log(storyWords.join(" "));
 - **Por que fiz isso?** O método `join()` une todas as palavras separadas novamente em uma única string, formando o texto final da minha história, agora polido e melhorado.
 
 
+## Projeto (POC) Explorando Dados com JavaScript
+### Sort
+O método sort é usado para ordenar elementos em um array. Ele pode ser aplicado em diferentes contextos:
+
+- **Ordenar Números:**
+   <br> O método sort pode organizar uma sequência de números em ordem crescente. No entanto, por padrão, ele converte os números para strings e os ordena como texto, o que pode levar a resultados inesperados com números. Para garantir a ordenação correta, é melhor usar uma função de comparação.
+
+```javascript
+//cria um array de números
+let num = [5, 4, 3, 8, 1];
+console.log(`Sem ordenar: ${num}`);
+
+//ordena em ordem crescente
+num.sort((a, b) => a - b);
+console.log(`Ordenado: ${num}`);
+
+/*Saída:
+Sem ordenar: 5,4,3,8,1
+Ordenado: 1,3,4,5,8
+*/
+```
+
+- **Ordenar Frutas:**
+   <br> Quando o array contém strings, o método sort organiza os elementos em ordem alfabética.
+
+```javascript
+//cria um array de frutas
+let frutas = ['banana', 'acerola', 'damasco', 'caju'];
+console.log(`Sem ordenar: ${frutas}`);
+
+//ordena em ordem alfabética
+frutas.sort();
+console.log(`Ordenado: ${frutas}`);
+
+/*Saída:
+Sem ordenar: banana,acerola,damasco,caju
+Ordenado: acerola,banana,caju,damasco
+*/
+
+```
+
+### Reduce
+O método reduce é utilizado para reduzir um array a um único valor, realizando uma operação acumulativa.
+
+- **Calcular o Custo Total:**
+  <br> Suponha que você esta no supermercado e deseja calcular o custo total das frutas que pegou. Você pode usar reduce para somar o valor total, multiplicando o preço de cada fruta pela quantidade comprada.
+
+```javascript
+//informações das frutas
+let custo = [
+    { fruta: "banana", valor: 10, qtd: 6 },
+    { fruta: "amora", valor: 1, qtd: 10 },
+    { fruta: "acerola", valor: 4, qtd: 10 },
+    { fruta: "pessego", valor: 5, qtd: 3 },
+    { fruta: "uva", valor: 5, qtd: 11 }
+];
+
+const calcularCusto = (item) => item.valor * item.qtd;
+
+//calcula o custo total
+let custo_total = custo.reduce((contador, elem_atual) => contador + calcularCusto(elem_atual), 0);
+console.log(custo_total);
+
+/*Saída:
+180
+*/
+```
+Nesse exemplo, reduce acumula o total ao somar o custo de cada fruta.
+
+- **Encontrar a Fruta Mais Barata e a Mais Cara:**
+  <br> Para identificar o custo individual mais barato e mais caro, você pode usar reduce com uma função de comparação.
+
+```javascript
+//encontrar a fruta mais barata
+let mais_barata = custo.reduce((contador, elem_atual) => contador < mult(elem_atual) ? contador : mult(elem_atual), 1000);
+console.log(mais_barata);
+
+/*Saída:
+10
+*/
+```
+
+Para encontrar a fruta mais barata, começamos com o contador em um número bem alto, como 1000. Em seguida, para cada fruta, calculamos o custo total (o preço da fruta multiplicado pela quantidade). Comparamos esse custo com o número que temos. Se o custo da fruta for menor que o número atual, atualizamos o número para esse custo. Ao final, o número será o custo mais baixo encontrado.
+
+```javascript
+//encontrar a fruta mais cara
+let mais_cara = custo.reduce((contador, elem_atual) => contador > mult(elem_atual) ? contador : mult(elem_atual), 0);
+console.log(mais_cara);
+
+/*Saída:
+60
+*/
+```
+
+Para descobrir a fruta mais cara, começamos com o contador valendo 0. Calculamos o custo total de cada fruta da mesma forma. Comparamos esse custo com o número atual, que começa em 0. Se o custo da fruta for maior que o número atual, atualizamos o número para esse custo. No final, o número mostrará o custo mais alto encontrado.
+
+### Spread
+O operador spread (...) permite combinar e copiar propriedades de objetos e arrays, evitando duplicação.
+
+- **Combinar Roupas:** 
+  <br> Suponha que você queira combinar os itens de dois armários em uma única lista para arrumar uma mala, garantindo que não haja peças repetidas. O operador spread pode ser usado para isso.
+
+```javascript
+let armario1 = {
+    blusa: "Azul",
+    calca: "jeans",
+    jaqueta: "branca",
+    moletom: "rosa",
+    sapato: "branco"
+};
+
+let armario2 = {
+    blazer: "Azul",
+    calca: "social",
+    meia: "preta",
+    bermuda: "xadrez",
+    sapato: "preto"
+};
+
+//combina os itens dos dois armários
+let mala = { ...armario1, ...armario2 };
+console.log(mala);
+
+/*Saída:
+{
+  blusa: 'Azul',
+  calca: 'social',
+  jaqueta: 'branca',
+  moletom: 'rosa',
+  sapato: 'preto',
+  blazer: 'Azul',
+  meia: 'preta',
+  bermuda: 'xadrez'
+}
+*/
+
+```
+Neste exemplo, começamos criando dois objetos, armario1 e armario2, onde listamos as peças de roupa e suas especificações em cada um. Após isso, usamos o operador spread para combinar todos esses itens em um único objeto chamado mala. Se houver peças repetidas entre os dois armários, a peça que aparece por último será a que aparece na lista final. Isso acontece porque o spread adiciona os itens do segundo objeto (armario2) sobre os itens do primeiro (armario1), sobrescrevendo as repetições.
